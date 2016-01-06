@@ -7,14 +7,17 @@ class ExampleThread extends Thread {
     }
     
     public void run() {
-        System.out.println("Hi" + num);
+        long total = 0;
+        for (long j = 0; j < 100000000000l; j++)
+            total += j;
+        System.out.println("Hi" + num + total);
     }
-
+    
 }
 
 class RunItAll {
     public static void main(String[] args) {
-        for (int i=0; i < 5; i++) {
+        for (int i=0; i < 8; i++) {
             ExampleThread t = new ExampleThread(i);
             t.start();
         }
