@@ -2,6 +2,7 @@ import java.util.*;
 
 class SumThread extends Thread {
 
+    public static final int CUTOFF = 1000;
     private int[] arr;
     private int lo;
     private int hi;
@@ -17,12 +18,15 @@ class SumThread extends Thread {
     @Override
     public void run() {
         try {
-            if (lo == hi-1)
-                ans = arr[lo];
+            if (hi - lo < CUTOFF) {
+                for (int i=lo; i < hi; i++)
+                    ans += arr[i];
+            }
             else {
                 SumThread left = new SumThread(arr,lo,
                                                (lo+hi)/2);
-                SumThread right = new SumThread(arr,(lo+hi)/2,
+                SumThread right = new SumThread(arr,
+                                                (lo+hi)/2,
                                                 hi);
                 left.start();
                 right.start();
@@ -45,14 +49,14 @@ class DivAndConq {
     }
     
     public static void main(String[] args) throws InterruptedException {
-        int[] nums = new int[100000000];
+        int[] nums = new int[100000];
         for (int i=0; i < nums.length; i++)
             nums[i] = i;
         System.out.println(sum(nums));
-        int supertotal = 0;
-        for (int i=0; i < 1000; i++)
-            supertotal += sum(nums);
-        System.out.println(supertotal);
+        // int supertotal = 0;
+        // for (int i=0; i < 1000; i++)
+        //     supertotal += sum(nums);
+        // System.out.println(supertotal);
     }
 }
 
