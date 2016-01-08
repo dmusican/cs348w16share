@@ -28,10 +28,10 @@ class SumThread extends Thread {
                 SumThread right = new SumThread(arr,
                                                 (lo+hi)/2,
                                                 hi);
+                // Avoid making extra thread
                 left.start();
-                right.start();
+                right.run();
                 left.join();
-                right.join();
                 ans = left.ans + right.ans;
             }
         } catch (InterruptedException e) {
@@ -49,7 +49,7 @@ class DivAndConq {
     }
     
     public static void main(String[] args) throws InterruptedException {
-        int[] nums = new int[100000];
+        int[] nums = new int[10000000];
         for (int i=0; i < nums.length; i++)
             nums[i] = i;
         System.out.println(sum(nums));
